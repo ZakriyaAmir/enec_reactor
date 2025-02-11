@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public SpawnerController[] spawnerControllers;
     public GameObject spawnersParent;
 
+    public GameObject[] UIScreens;
+    public int currentScreen;
+
 
     public float MinRs1, MaxRs1, MinUs1, MaxUs1;
     public float MinRs2, MaxRs2, MinUs2, MaxUs2;
@@ -28,6 +31,17 @@ public class GameManager : MonoBehaviour
         spawnersParent.SetActive(false);
         changeAtomPrefab(prefab1);
         InvokeRepeating(nameof(checkSensor),0f,3f);
+        UIScreens[0].SetActive(true);
+    }
+
+    void nextScreen() 
+    {
+        currentScreen++;
+        foreach (var screen in UIScreens) 
+        {
+            screen.SetActive(false);
+        }
+        UIScreens[currentScreen].SetActive(true);
     }
 
     void checkSensor()

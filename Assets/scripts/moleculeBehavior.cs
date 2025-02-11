@@ -28,7 +28,7 @@ public class moleculeBehavior : MonoBehaviour
 
         //for scale anim
         Vector3 startScale = transform.localScale;
-        Vector3 endScale = Vector3.zero;
+        Vector3 endScale = new Vector3(0.1f, 0.1f, 0.1f);
         float elapsedTime = 0f;
         float duration = 1f;
 
@@ -39,16 +39,14 @@ public class moleculeBehavior : MonoBehaviour
             yield return null;
         }
 
-        transform.localScale = endScale;
+        transform.localScale = Vector3.zero;
         //
 
-        Debug.Log("zak1");
         foreach (Transform child in atomsParent) // Loop through all children
         {
             GameObject go = Instantiate(child.gameObject, transform);
-            Debug.Log("zak2 = " + go.name);
             go.transform.parent = null;
-            go.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            go.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
