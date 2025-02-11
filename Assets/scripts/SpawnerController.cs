@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
@@ -24,40 +25,51 @@ public class SpawnerController : MonoBehaviour
     IEnumerator SpawnPrefabs()
     {
         int spawnedCount = 0;
+        List<int> availableSpawnIndices = new List<int>();
+
+        // Prepopulate available spawn indices
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            availableSpawnIndices.Add(i);
+        }
 
         while (spawnedCount < spawnPoints.Length)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
 
-            int randomIndex;
-            do
+            if (availableSpawnIndices.Count == 0)
             {
-                randomIndex = Random.Range(0, spawnPoints.Length);
+                Debug.Log("All spawn points have been used. Stopping spawning.");
+                yield break; // Exit coroutine safely
             }
-            while (hasSpawned[randomIndex]); // Find an unused spawn point
 
-            Transform spawnPoint = spawnPoints[randomIndex];
-            hasSpawned[randomIndex] = true; // Mark this spawn point as used
+            // Pick a random available spawn point
+            int index = Random.Range(0, availableSpawnIndices.Count);
+            int spawnIndex = availableSpawnIndices[index];
+
+            Transform spawnPoint = spawnPoints[spawnIndex];
+            availableSpawnIndices.RemoveAt(index); // Remove used index
+            hasSpawned[spawnIndex] = true;
             spawnedCount++;
 
-            float randomSpeed = Random.Range(minUpwardSpeed, maxUpwardSpeed); // Assign random upward speed
-            float randomRotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed); // Assign random rotation speed
-            float randomZRotation = Random.Range(0f, 360f); // Assign random initial Z-axis rotation
+            float randomSpeed = Random.Range(minUpwardSpeed, maxUpwardSpeed);
+            float randomRotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+            float randomZRotation = Random.Range(0f, 360f);
 
             GameObject instance = Instantiate(prefab, spawnPoint.position, Quaternion.Euler(0, 0, randomZRotation));
-            instance.GetComponent<PrefabMover>().spawnController = this;
-            instance.GetComponent<PrefabMover>().title = prefab.name;
-
-            // Set the predefined scale
             instance.transform.localScale = Vector3.one * prefabScale;
 
+            // Optimize by caching the component
             PrefabMover mover = instance.GetComponent<PrefabMover>();
             if (mover != null)
             {
+                mover.spawnController = this;
+                mover.title = prefab.name;
                 mover.Initialize(spawnPoint.position, randomSpeed, randomRotationSpeed);
             }
         }
 
         Debug.Log("All spawn points have been used. Stopping spawning.");
     }
+
 }

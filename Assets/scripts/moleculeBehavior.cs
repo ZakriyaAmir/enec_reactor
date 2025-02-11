@@ -50,6 +50,28 @@ public class moleculeBehavior : MonoBehaviour
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
+                //change force according to current level
+                int level = FindObjectOfType<GameManager>().gameLevel;
+                switch (level) 
+                {
+                    case 2:
+                        forceAmount = 2f;
+                        break;
+                    case 3:
+                        forceAmount = 3f;
+                        break;
+                    case 4:
+                        forceAmount = 4f;
+                        break;
+                    case 5:
+                        forceAmount = 5f;
+                        break;
+                    default:
+                        forceAmount = 1f;
+                        break;
+                }
+                //
+
                 Vector2 randomDirection = Random.insideUnitCircle.normalized; // Get a random direction
                 rb.AddForce(randomDirection * forceAmount, ForceMode2D.Impulse); // Apply force
 
