@@ -44,6 +44,16 @@ public class GameManager : MonoBehaviour
         UIScreens[currentScreen].SetActive(true);
     }
 
+    void startGame() 
+    {
+        Debug.Log("Game Started!");
+        gameStarted = true;
+        spawnersParent.SetActive(true);
+        changeAtomPrefab(prefab1);
+        changeAtomsProperties(MinRs1, MaxRs1, MinUs1, MaxUs1);
+        gameLevel = 1;
+    }
+
     void checkSensor()
     {
         if (!gameStarted)
@@ -51,12 +61,9 @@ public class GameManager : MonoBehaviour
             if (sensorValue > 0 && sensorValue <= 1 && gameLevel == 0)
             {
                 //Start game here
-                Debug.Log("Game Started!");
-                gameStarted = true;
-                spawnersParent.SetActive(true);
-                changeAtomPrefab(prefab1);
-                changeAtomsProperties(MinRs1, MaxRs1, MinUs1, MaxUs1);
-                gameLevel = 1;
+                Invoke(nameof(startGame), 6f);
+                nextScreen();
+                Invoke(nameof(nextScreen), 20f);
                 return;
             }
             return;

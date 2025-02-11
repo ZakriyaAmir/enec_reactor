@@ -1643,7 +1643,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4227858431
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3082,7 +3082,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 1459617791
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7593,6 +7593,7 @@ MonoBehaviour:
   - {fileID: 783469709}
   - {fileID: 836379343}
   - {fileID: 42331305}
+  currentScreen: 0
   MinRs1: 40
   MaxRs1: 100
   MinUs1: 5
