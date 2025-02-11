@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
     {
         if (!gameStarted)
         {
-            if (sensorValue > 0 && sensorValue <= 1 && gameLevel == 0)
+            if (sensorValue > 0/* && sensorValue <= 1 */&& gameLevel == 0)
             {
                 //Start game here
                 Invoke(nameof(startGame), 6f);
